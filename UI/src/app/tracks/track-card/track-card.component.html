@@ -13,5 +13,6 @@
         <button *appHasRole='["admin"]' class="card-link" type="button" (click)="delete()">Delete</button>
         <button routerLink="/albums/{{track.albumId}}" class="card-link" type="button">To album</button>
         <button *appHasRole='["admin"]' routerLink="/playlists/addtrack/{{track.id}}" class="card-link" type="button">Add to playlist</button>
+        <button *appHasRole='["admin"]' routerLink="/playlists/removetrack/{{track.id}}" class="card-link" type="button">Remove from a playlist</button>
     </div>
 </div>

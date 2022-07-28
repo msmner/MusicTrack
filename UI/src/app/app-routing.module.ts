@@ -10,8 +10,10 @@ import { AddToPlaylistComponent } from './playlists/add-to-playlist/add-to-playl
 import { CreatePlaylistComponent } from './playlists/create-playlist/create-playlist.component';
 import { PlaylistDetailsComponent } from './playlists/playlist-details/playlist-details.component';
 import { PlaylistListComponent } from './playlists/playlist-list/playlist-list.component';
+import { RemoveTrackComponent } from './playlists/remove-track/remove-track.component';
 import { RegisterComponent } from './register/register.component';
 import { CreateTrackComponent } from './tracks/create-track/create-track.component';
+import { SearchTracksComponent } from './tracks/search-tracks/search-tracks.component';
 import { TrackListComponent } from './tracks/track-list/track-list.component';
 
 const routes: Routes = [
@@ -30,6 +32,8 @@ const routes: Routes = [
       { path: 'tracks', component: TrackListComponent },
       { path: 'tracks/create/:id', component: CreateTrackComponent },
       { path: 'playlists/addtrack/:id', component: AddToPlaylistComponent },
+      { path: 'playlists/removetrack/:id', component: RemoveTrackComponent },
+      { path: 'tracks/search', component: SearchTracksComponent },
     ]
   },
   { path: 'register', component: RegisterComponent },

@@ -1,0 +1,8 @@
+<form [formGroup]='playlistForm' (ngSubmit)="playlistForm.valid && remove()" autocomplete="off">
+    <h2 class="text-center text-primary">Remove track from a playlist</h2>
+    <app-text-input [formControl]='playlistForm.controls["name"]' [label]='"Name of playlist"'></app-text-input>
+        
+    <div class="form-group text-center">
+        <button [disabled]='!playlistForm.valid' class="btn btn-success mr-2" type="submit">Remove</button>
+    </div>
+</form>

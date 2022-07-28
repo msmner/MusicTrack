@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Track } from '../models/Track';
+import { Type } from '../models/Type';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class TrackService {
 
   getTracksByAlbum(albumId: string) {
     return this.httpClient.get<Track[]>(this.baseUrl + 'tracks/album/' + albumId);
+  }
+
+  search(name?: string, duration?: Date, performer?: string, arranger?: string, type?: Type): Observable<Track[]> {
+    return this.httpClient.get<Track[]>(this.baseUrl + 'tracks');
   }
 }

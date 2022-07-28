@@ -40,9 +40,13 @@ export class PlaylistService {
 
   addTrack(playlistId: string, trackId: string, position?: number) {
     if (position) {
-      return this.httpClient.put(this.baseUrl + 'playlists/' + playlistId + '/add/' + trackId + '/' + position, { 'headers': this.headers });
+      return this.httpClient.put(this.baseUrl + 'playlists/' + playlistId + '/add/' + trackId + '/' + position, {}, { 'headers': this.headers });
     } else {
-      return this.httpClient.put(this.baseUrl + 'playlists/' + playlistId + '/add/' + trackId, { 'headers': this.headers });
+      return this.httpClient.put(this.baseUrl + 'playlists/' + playlistId + '/add/' + trackId, {}, { 'headers': this.headers });
     }
+  }
+
+  removeTrack(playlistId: string, trackId: string) {
+    return this.httpClient.put(this.baseUrl + 'playlists/' + playlistId + '/remove/' + trackId, {}, { 'headers': this.headers });
   }
 }

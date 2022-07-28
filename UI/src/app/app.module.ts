@@ -28,6 +28,8 @@ import { TrackCardComponent } from './tracks/track-card/track-card.component';
 import { PlaylistCardComponent } from './playlists/playlist-card/playlist-card.component';
 import { CreatePlaylistComponent } from './playlists/create-playlist/create-playlist.component';
 import { AddToPlaylistComponent } from './playlists/add-to-playlist/add-to-playlist.component';
+import { RemoveTrackComponent } from './playlists/remove-track/remove-track.component';
+import { SearchTracksComponent } from './tracks/search-tracks/search-tracks.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { AddToPlaylistComponent } from './playlists/add-to-playlist/add-to-playl
     TrackCardComponent,
     PlaylistCardComponent,
     CreatePlaylistComponent,
-    AddToPlaylistComponent
+    AddToPlaylistComponent,
+    RemoveTrackComponent,
+    SearchTracksComponent
   ],
   imports: [
     BrowserModule,
