@@ -71,5 +71,20 @@ namespace MusicTrack.Infrastructure.Repositories
                 .Where(x => x.Name.Contains(name!))
                 .ToListAsync();
         }
+
+        public async Task<PlayList?> GetPlaylistByIdAsync(Guid id)
+        {
+            return await _context
+                .PlayLists
+                .Include(x => x.Tracks)
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<PlayList?> GetPlaylistByName(string name)
+        {
+            return await _context
+                .PlayLists
+                .SingleOrDefaultAsync(x => x.Name == name);
+        }
     }
 }

@@ -1,0 +1,19 @@
+<div *ngIf="(authService.currentUser$ | async) === null" class="container mt-5">
+    <div *ngIf="!registerMode" style="text-align: center;">
+        <h3>Check the rankings of your favourite snooker tournament!</h3>
+        <button (click)="toggleRegister()" class="btn btn-primary btn-lg mr-2">Register</button>
+        <button class="btn btn-info btn-lg mr-2">Learn more</button>
+    </div>
+
+    <div *ngIf="registerMode" class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <app-register (cancelRegister)="cancelRegister($event)"></app-register>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5" *ngIf="(authService.currentUser$ | async) as user">
+   <div><app-ranking></app-ranking></div>
+</div>

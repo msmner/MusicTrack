@@ -1,0 +1,12 @@
+<div *ngIf="album" class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{album.name}}</h5>
+        <p class="card-text">{{album.publishingYear}}</p>
+        <p class="card-text">{{album.duration}}</p>
+    </div>
+    <div class="card-body">
+        <button *appHasRole='["admin"]' class="card-link" type="button" (click)="delete()">Delete</button>
+        <button routerLink="/albums/{{album.id}}" class="card-link" type="button">Tracks</button>
+        <button *appHasRole='["admin"]' routerLink="/tracks/create/{{album.id}}" class="card-link" type="button">Add Track</button>
+    </div>
+</div>

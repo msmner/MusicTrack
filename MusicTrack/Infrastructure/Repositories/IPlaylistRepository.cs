@@ -21,5 +21,9 @@ namespace MusicTrack.Infrastructure.Repositories
         Task<IList<PlayList>> GetPlaylistByTrackId(Guid trackId);
 
         Task<List<PlayList>> GetPlaylistsByName(string? name);
+
+        Task<PlayList?> GetPlaylistByIdAsync(Guid id);
+
+        Task<PlayList?> GetPlaylistByName(string name);
     }
 }

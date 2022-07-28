@@ -4,8 +4,8 @@
     {
         string Message { get; }
 
-        int ErrorCode { get; }
-
         string Service { get; }
+
+        public string? StackTrace { get; set; }
     }
 }

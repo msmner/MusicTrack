@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "26154c2e-1f19-441c-ab81-c9c915e220e1": {
+      "ProjectGuid": "26154c2e-1f19-441c-ab81-c9c915e220e1",
+      "DisplayName": "MusicTrack",
+      "ColorIndex": 0
+    },
+    "2386f7e6-d379-462b-b503-b049e5989d6a": {
+      "ProjectGuid": "2386f7e6-d379-462b-b503-b049e5989d6a",
+      "DisplayName": "MusicTrackTests",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 2
+}

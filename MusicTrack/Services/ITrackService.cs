@@ -7,6 +7,10 @@ namespace MusicTrack.Services
     {
         Task<Track?> GetTrackById(Guid trackId);
 
+        Task<IList<Track>> GetTracksByAlbum(Guid albumId);
+
+        Task<IList<Track>> GetTracksByPlaylist(Guid playlistId);
+
         Task<Track> CreateTrack(Guid albumId, CreateTrackDto createTrackDto);
 
         Task UpdateTrack(Guid albumId, Guid trackId, UpdateTrackDto trackDto);
@@ -22,5 +26,7 @@ namespace MusicTrack.Services
         Task<List<Track>?> GetTracksByArranger(string? arranger);
 
         Task<List<Track>?> GetTracksByType(TrackType? type);
+
+        Task<IList<Track>> GetAllTracks();
     }
 }

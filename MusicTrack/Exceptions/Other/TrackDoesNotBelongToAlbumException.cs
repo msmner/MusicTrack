@@ -5,7 +5,6 @@
         public TrackDoesNotBelongToAlbumException()
            : base("Track does not belong to this album")
         {
-            ErrorCode = Errors.TrackDoesNotBelongToThisAlbum;
         }
     }
 }

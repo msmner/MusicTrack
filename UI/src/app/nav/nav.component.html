@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+    <div class="container">
+        <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Music Tracks</a>
+        <ul class="navbar-nav mr-auto">
+            <ng-container *ngIf="authService.currentUser$ | async">
+                <li *appHasRole='["admin"]' class="nav-item">
+                    <a class="nav-link" routerLink='/albums/create' routerLinkActive='active'>Create Album</a>
+                </li>
+                <li *appHasRole='["admin"]' class="nav-item">
+                    <a class="nav-link" routerLink='/playlists/create' routerLinkActive='active'>Create Playlist</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/tracks' routerLinkActive='active'>Tracks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/albums' routerLinkActive='active'>Albums</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink='/playlists' routerLinkActive='active'>Playlists</a>
+                </li>
+            </ng-container>
+        </ul>
+        <div class="dropdown" *ngIf="(authService.currentUser$ | async) as user" dropdown>
+            <a class="dropdown-toggle text-light ml-3" dropdownToggle>Welcome {{ user.userName | titlecase }}</a>
+            <div class="dropdown-menu" *dropdownMenu>
+                <a class="dropdown-item" (click)="logout()">Logout</a>
+            </div>
+        </div>
+
+        <form *ngIf="(authService.currentUser$ | async) === null" [formGroup]='loginForm' class="d-flex"
+            (ngSubmit)="loginForm.valid && login()" autocomplete="off">
+            <app-text-input [formControl]='loginForm.controls["username"]' [label]='"Username"'></app-text-input>
+            <app-text-input [formControl]='loginForm.controls["password"]' [label]='"Password"' [type]='"password"'>
+            </app-text-input>
+            <button [disabled]='!loginForm.valid' class="btn btn-outline-success" type="submit">Login</button>
+        </form>
+    </div>
+</nav>

@@ -18,5 +18,9 @@ namespace MusicTrack.Services
         Task RemoveTrack(Guid playlistId, Guid trackId);
 
         Task<List<PlayList>> SearchPlaylistsByName(string? name);
+
+        Task<IList<PlayList>> GetAllPlaylists();
+
+        Task<PlayList> GetPlaylistByName(string name);
     }
 }

@@ -5,7 +5,6 @@
         public PlaylistNotFoundException()
            : base("Playlist not found")
         {
-            ErrorCode = Errors.PlaylistNotFound;
         }
     }
 }

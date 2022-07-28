@@ -136,6 +136,11 @@ namespace MusicTrack.Services
             return playlist;
         }
 
+        public async Task<IList<PlayList>> GetAllPlaylists()
+        {
+            return await _playlistRepository.GetAllAsync();
+        }
+
         public async Task RemoveTrack(Guid playlistId, Guid trackId)
         {
             Track? track = await _trackRepository.FindByIdAsync(trackId);
@@ -231,6 +236,17 @@ namespace MusicTrack.Services
             List<PlayList> playlists = await _playlistRepository.GetPlaylistsByName(name);
 
             return playlists;
+        }
+
+        public async Task<PlayList> GetPlaylistByName(string name)
+        {
+            PlayList? playlist = await _playlistRepository.GetPlaylistByName(name);
+            if (playlist == null)
+            {
+                throw new PlaylistNotFoundException();
+            }
+
+            return playlist;
         }
     }
 }

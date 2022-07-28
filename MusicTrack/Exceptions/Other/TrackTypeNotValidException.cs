@@ -5,7 +5,6 @@
         public TrackTypeNotValidException()
            : base("Track type not valid")
         {
-            ErrorCode = Errors.TrackTypeNotValid;
         }
     }
 }

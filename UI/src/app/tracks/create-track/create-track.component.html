@@ -1,0 +1,16 @@
+<form [formGroup]='trackForm' (ngSubmit)="trackForm.valid && create()" autocomplete="off">
+    <h2 class="text-center text-primary">Create an album</h2>
+    <app-text-input [formControl]='trackForm.controls["name"]' [label]='"Name"'></app-text-input>
+    <app-text-input [formControl]='trackForm.controls["writtenBy"]' [label]='"Written by"'></app-text-input>
+    <app-text-input [formControl]='trackForm.controls["performedBy"]' [label]='"Performed by"'></app-text-input>
+    <app-text-input [formControl]='trackForm.controls["arrangedBy"]' [label]='"Arranged by"'></app-text-input>
+    <app-text-input [formControl]='trackForm.controls["duration"]' [label]='"Duration in seconds"'></app-text-input>
+    <select id="type" class="form-control" [formControl]='trackForm.controls["type"]'>
+        <option value="" disabled selected hidden>Choose the track type</option>
+        <option *ngFor="let trackType of trackTypes" [value]="trackType">{{trackType}}
+        </option>
+    </select>
+    <div class="form-group text-center">
+        <button [disabled]='!trackForm.valid' class="btn btn-success mr-2" type="submit">Create</button>
+    </div>
+</form>

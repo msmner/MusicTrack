@@ -15,11 +15,13 @@ namespace MusicTrack.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IPlaylistService _playlistService;
+        private readonly ITrackService _trackService;
         private readonly ILogger<PlaylistsController> _logger;
-        public PlaylistsController(IMapper mapper, IPlaylistService playlistService, ILogger<PlaylistsController> logger)
+        public PlaylistsController(IMapper mapper, IPlaylistService playlistService, ITrackService trackService, ILogger<PlaylistsController> logger)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _playlistService = playlistService ?? throw new ArgumentNullException(nameof(playlistService));
+            _trackService = trackService ?? throw new ArgumentNullException(nameof(trackService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -49,6 +51,16 @@ namespace MusicTrack.Controllers
             return playlistsDto;
         }
 
+        [HttpGet("get/{name}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<GetPlaylistDto>> GetPlaylist(string name)
+        {
+            var playlist = await _playlistService.GetPlaylistByName(name);
+            var playlistDto = _mapper.Map<GetPlaylistDto>(playlist);
+
+            return playlistDto;
+        }
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<GetPlaylistDto>> GetPlaylist(Guid id)
@@ -57,6 +69,26 @@ namespace MusicTrack.Controllers
             var playlistDto = _mapper.Map<GetPlaylistDto>(playlist);
 
             return playlistDto;
+        }
+
+        [HttpGet("all")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IList<GetPlaylistDto>> GetPlaylists()
+        {
+            IList<PlayList> playlists = await _playlistService.GetAllPlaylists();
+            var playlistDtos = _mapper.Map<IList<GetPlaylistDto>>(playlists);
+
+            return playlistDtos;
+        }
+
+        [HttpGet("{id}/tracks")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IList<TrackDto>> GetPlaylistTracks(Guid id)
+        {
+            IList<Track> tracks = await _trackService.GetTracksByPlaylist(id);
+            var tracksDto = _mapper.Map<IList<TrackDto>>(tracks);
+
+            return tracksDto;
         }
 
         [HttpDelete("{id}")]
@@ -79,7 +111,7 @@ namespace MusicTrack.Controllers
 
         [HttpPut("{playlistId}/add/{trackId}/{position?}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<ActionResult> AddTrack(Guid playlistId, Guid trackId, int? position)
+        public async Task<ActionResult> AddTrack(Guid playlistId, Guid trackId, int? position, string? body)
         {
             await _playlistService.AddTrack(playlistId, trackId, position);
 

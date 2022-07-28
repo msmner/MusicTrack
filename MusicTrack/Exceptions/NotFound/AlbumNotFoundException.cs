@@ -5,7 +5,6 @@
         public AlbumNotFoundException()
            : base("Album not found")
         {
-            ErrorCode = Errors.AlbumNotFound;
         }
     }
 }

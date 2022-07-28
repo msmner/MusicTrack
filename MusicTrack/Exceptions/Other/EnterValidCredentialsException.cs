@@ -5,7 +5,6 @@
         public EnterValidCredentialsException()
            : base("Enter valid username and password")
         {
-            ErrorCode = Errors.NeedValidCredentials;
         }
     }
 }

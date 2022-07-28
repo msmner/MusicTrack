@@ -18,5 +18,7 @@ namespace MusicTrack.Services
         Task<List<Album>> GetAlbumsByYearRange(int? startYear, int? endYear);
 
         Task<List<Album>> GetAlbumsByDuration(TimeSpan? startDuration, TimeSpan? endDuration);
+
+        Task<IList<Album>> GetAlbums();
     }
 }

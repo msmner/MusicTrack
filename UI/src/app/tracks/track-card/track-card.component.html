@@ -1,0 +1,17 @@
+<div *ngIf="track" class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{track.name}}</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Duration - {{track.duration}}</li>
+        <li class="list-group-item">Type - {{track.type}}</li>
+        <li class="list-group-item">Written by - {{track.writtenBy}} </li>
+        <li class="list-group-item">Arranged by - {{track.arrangedBy}}</li>
+        <li class="list-group-item">Performed by - {{track.performedBy}}</li>
+    </ul>
+    <div class="card-body">
+        <button *appHasRole='["admin"]' class="card-link" type="button" (click)="delete()">Delete</button>
+        <button routerLink="/albums/{{track.albumId}}" class="card-link" type="button">To album</button>
+        <button *appHasRole='["admin"]' routerLink="/playlists/addtrack/{{track.id}}" class="card-link" type="button">Add to playlist</button>
+    </div>
+</div>

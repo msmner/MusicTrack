@@ -5,7 +5,6 @@
         public TrackAlreadyIncludedInPlaylistException()
            : base("Track is already included in the playlist")
         {
-            ErrorCode = Errors.TrackAlreadyIncludedInPlaylist;
         }
     }
 }

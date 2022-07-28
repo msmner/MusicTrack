@@ -41,7 +41,7 @@ namespace MusicTrack.Services
                 ArrangedBy = createTrackDto.ArrangedBy,
                 CreatedOn = DateTime.Now,
                 AlbumId = albumId,
-                Duration = createTrackDto.Duration,
+                Duration = TimeSpan.FromSeconds(double.Parse(createTrackDto.Duration.TotalDays.ToString())),
                 Type = createTrackDto.Type,
                 WrittenBy = createTrackDto.WrittenBy,
             };
@@ -94,6 +94,11 @@ namespace MusicTrack.Services
             }
 
             return track;
+        }
+
+        public async Task<IList<Track>> GetAllTracks()
+        {
+            return await _trackRepository.GetAllAsync();
         }
 
         public async Task UpdateTrack(Guid albumId, Guid trackId, UpdateTrackDto trackDto)
@@ -168,6 +173,30 @@ namespace MusicTrack.Services
             List<Track>? tracks = await _trackRepository.GetTracksByType(type);
 
             return tracks;
+        }
+
+        public async Task<IList<Track>> GetTracksByAlbum(Guid albumId)
+        {
+            Album? album = await _albumRepository.FindByIdAsync(albumId);
+            if (album == null)
+            {
+                throw new AlbumNotFoundException();
+            }
+
+            IList<Track> tracks = album.Tracks.ToList();
+
+            return tracks;
+        }
+
+        public async Task<IList<Track>> GetTracksByPlaylist(Guid playlistId)
+        {
+            var playlist = await _playlistRepository.GetPlaylistByIdAsync(playlistId);
+            if (playlist == null)
+            {
+                throw new PlaylistNotFoundException();
+            }
+
+            return playlist.Tracks;
         }
     }
 }

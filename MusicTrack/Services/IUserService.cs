@@ -1,9 +1,12 @@
-﻿using MusicTrack.Models;
+﻿using MusicTrack.Dtos;
+using MusicTrack.Models;
 
 namespace MusicTrack.Services
 {
     public interface IUserService
     {
-        Task<User> AddAsync(User user);
+        Task<User> Register(RegisterDto userDto);
+
+        Task<User> Login(LoginDto loginDto);
     }
 }

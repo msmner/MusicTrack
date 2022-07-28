@@ -36,6 +36,16 @@ namespace MusicTrack.Controllers
             return albumDto;
         }
 
+        [HttpGet("all")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IList<AlbumDto>>> GetAlbums()
+        {
+            IList<Album>? albums = await _albumService.GetAlbums();
+            var albumDtos = _mapper.Map<IList<AlbumDto>>(albums);
+
+            return Ok(albumDtos);
+        }
+
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<AlbumDto>> CreateAlbum(CreateAlbumDto createAlbumDto)

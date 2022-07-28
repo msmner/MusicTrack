@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MusicTrack.Filters;
 using MusicTrack.Infrastructure;
 using MusicTrack.Infrastructure.Repositories;
+using MusicTrack.Middlewares;
+using MusicTrack.Models;
 using MusicTrack.Services;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -22,14 +26,15 @@ namespace MusicTrack
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             services.AddControllers()
-                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
-                .AddJsonOptions(options =>
+            .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+            .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
             services.AddEndpointsApiExplorer();
+            services.AddCors();
             services.AddDbContext<MusicTrackDbContext>(
                             options => options.UseNpgsql(Configuration.GetConnectionString("MusicTrackDatabase")));
 
@@ -43,7 +48,7 @@ namespace MusicTrack
                     new OpenApiSecurityScheme
                     {
                         Name = "Authorization",
-                        Description = @"JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below. Example: 'Bearer 12345abcdef'",
+                        Description = @"JWT Authorization header using the Bearer scheme. Enter your token in the text input below.",
                         In = ParameterLocation.Header,
                         Type = SecuritySchemeType.Http,
                         Scheme = "Bearer"
@@ -52,23 +57,32 @@ namespace MusicTrack
                 options.OperationFilter<SwaggerAuthorizeCheckOperationFilter>();
             });
 
+            services.AddIdentityCore<User>(opt =>
+            {
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredLength = 3;
+            })
+                .AddRoles<Role>()
+                .AddRoleManager<RoleManager<Role>>()
+                .AddSignInManager<SignInManager<User>>()
+                .AddRoleValidator<RoleValidator<Role>>()
+                .AddEntityFrameworkStores<MusicTrackDbContext>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
-                options.RequireHttpsMetadata = false;
-                options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = Configuration["Jwt:Audience"],
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:TokenKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                 };
             });
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAlbumRepository, AlbumRepository>();
             services.AddScoped<IPlaylistRepository, PlayListRepository>();
             services.AddScoped<ITrackRepository, TrackRepository>();
@@ -77,9 +91,12 @@ namespace MusicTrack
             services.AddTransient<IAlbumService, AlbumService>();
             services.AddTransient<ITrackService, TrackService>();
             services.AddTransient<IPlaylistService, PlaylistService>();
+            services.AddTransient<ITokenService, TokenService>();
         }
         public void Configure(IApplicationBuilder app)
         {
+            app.UseMiddleware<ErrorHandlerMiddleware>();
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins(Configuration["CORS"]));
             app.UseRouting();
             app.UseAuthentication();
             app.UseSwagger();

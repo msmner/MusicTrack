@@ -5,7 +5,6 @@
         public PlaylistIsEmptyException()
            : base("No tracks in the playlist")
         {
-            ErrorCode = Errors.PlaylistIsEmpty;
         }
     }
 }

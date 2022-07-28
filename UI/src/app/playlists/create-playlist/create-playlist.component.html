@@ -1,0 +1,19 @@
+<form [formGroup]='playlistForm' (ngSubmit)="playlistForm.valid && create()" autocomplete="off">
+    <h2 class="text-center text-primary">Create a playlist</h2>
+    <app-text-input [formControl]='playlistForm.controls["name"]' [label]='"Name"'></app-text-input>
+    <hr>
+    <div>
+        <label>Is public ?</label>
+        <hr>
+     <label>
+         <input type="radio" name="isPublic" formControlName="isPublic" [value]="true" />Yes
+     </label>
+     <hr>
+     <label>
+         <input type="radio" name="isPublic" formControlName="isPublic" [value]="false" />No
+     </label>
+    </div>
+    <div class="form-group text-center">
+        <button [disabled]='!playlistForm.valid' class="btn btn-success mr-2" type="submit">Create</button>
+    </div>
+</form>

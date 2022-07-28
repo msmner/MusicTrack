@@ -35,6 +35,11 @@ namespace MusicTrack.Services
             return album;
         }
 
+        public async Task<IList<Album>> GetAlbums()
+        {
+            return await _albumRepository.GetAllAsync();
+        }
+
         public async Task DeleteAlbum(Guid albumId)
         {
             Album? album = await _albumRepository.FindByIdAsync(albumId);

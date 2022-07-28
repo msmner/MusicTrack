@@ -5,7 +5,6 @@
         public TrackNotFoundException()
            : base("Track not found")
         {
-            ErrorCode = Errors.TrackNotFound;
         }
     }
 }

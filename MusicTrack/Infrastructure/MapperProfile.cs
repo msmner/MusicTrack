@@ -7,7 +7,8 @@ namespace MusicTrack.Infrastructure
     {
         public MapperProfile()
         {
-            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<RegisterDto, User>();
+            CreateMap<User, UserDto>();
             CreateMap<Track, TrackDto>();
             CreateMap<Album, AlbumDto>().ForMember(x => x.Tracks, opt => opt.MapFrom(y => y.Tracks.Select(z => z.Name)));
             CreateMap<PlayList, CreatePlaylistDto>();

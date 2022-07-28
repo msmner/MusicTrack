@@ -3,9 +3,8 @@
     public class UsernameAlreadyExistsException : MusicTrackException, IMusicTrackException
     {
         public UsernameAlreadyExistsException()
-           : base("Username is taken")
+           : base("Username or password is incorrect")
         {
-            ErrorCode = Errors.UsernameAlreadyExists;
         }
     }
 }

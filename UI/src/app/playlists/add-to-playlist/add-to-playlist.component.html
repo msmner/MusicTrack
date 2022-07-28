@@ -1,0 +1,9 @@
+<form [formGroup]='playlistForm' (ngSubmit)="playlistForm.valid && add()" autocomplete="off">
+    <h2 class="text-center text-primary">Add track to a playlist</h2>
+    <app-text-input [formControl]='playlistForm.controls["name"]' [label]='"Name"'></app-text-input>
+    <app-text-input [formControl]='playlistForm.controls["position"]' [label]='"Position"'></app-text-input>
+        
+    <div class="form-group text-center">
+        <button [disabled]='!playlistForm.valid' class="btn btn-success mr-2" type="submit">Add</button>
+    </div>
+</form>

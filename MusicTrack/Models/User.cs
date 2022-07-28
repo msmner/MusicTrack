@@ -1,16 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace MusicTrack.Models
 {
-    public class User : BaseModel
+    public class User : IdentityUser<int>
     {
-        [Required]
-        public string Username { get; set; } = null!;
+        public User()
+        {
+            UserRoles = new List<UserRole>();
+        }
 
-        [Required]
-        public string Password { get; set; } = null!;
-
-        [Required]
-        public string Role { get; set; } = null!;
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }

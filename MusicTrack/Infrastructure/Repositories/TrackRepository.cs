@@ -51,7 +51,7 @@ namespace MusicTrack.Infrastructure.Repositories
         {
             return await _context
                 .Tracks
-                .Where(t => t.Name.Contains(name))
+                .Where(t => t.Name.Contains(name!))
                 .ToListAsync();
         }
 
@@ -67,7 +67,7 @@ namespace MusicTrack.Infrastructure.Repositories
         {
             return await _context
                 .Tracks
-                .Where(t => t.PerformedBy.Contains(performer))
+                .Where(t => t.PerformedBy.Contains(performer!))
                 .ToListAsync();
         }
 
@@ -75,7 +75,7 @@ namespace MusicTrack.Infrastructure.Repositories
         {
             return await _context
                 .Tracks
-                .Where(t => t.ArrangedBy.Contains(arranger))
+                .Where(t => t.ArrangedBy.Contains(arranger!))
                 .ToListAsync();
         }
 
