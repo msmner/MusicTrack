@@ -34,8 +34,18 @@ export class SearchTracksComponent implements OnInit {
   }
 
   search() {
-    this.trackService.search(this.trackForm.value).subscribe((tracks: Track[]) => {
-      this.tracks = tracks;
-    })
+    this.trackService.search(this.trackForm.get('name')!.value,
+      this.trackForm.get('performedBy')!.value,
+      this.trackForm.get('arrangedBy')!.value,
+      this.trackForm.get('startDuration')!.value,
+      this.trackForm.get('endDuration')!.value,
+      this.trackForm.get('type')!.value)
+      .subscribe((tracks: Track[]) => {
+        this.tracks = tracks;
+        this.trackForm.reset();
+        this.initializeForm();
+      })
   }
 }
+
+

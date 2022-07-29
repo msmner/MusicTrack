@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -11,6 +11,7 @@ import { Type } from '../models/Type';
 export class TrackService {
   baseUrl = environment.apiUrl;
   headers = { 'content-type': 'application/json' };
+  params = new HttpParams();
 
   constructor(private httpClient: HttpClient) { }
   getAll(): Observable<Track[]> {
@@ -33,7 +34,23 @@ export class TrackService {
     return this.httpClient.get<Track[]>(this.baseUrl + 'tracks/album/' + albumId);
   }
 
-  search(name?: string, duration?: Date, performer?: string, arranger?: string, type?: Type): Observable<Track[]> {
-    return this.httpClient.get<Track[]>(this.baseUrl + 'tracks');
+  search(name?: string, performer?: string, arranger?: string, startDuration?: Date, endDuration?: Date, type?: Type): Observable<Track[]> {
+    if (name) {
+      this.params = this.params.set('name', name);
+    } else if (performer) {
+      this.params = this.params.set('performer', performer);
+    }else if (arranger) {
+      this.params = this.params.set('arranger', arranger);
+    }
+    // else if (startDuration) {
+    //   let params = new HttpParams().set('startDuration', startDuration);
+    // }else if (endDuration) {
+    //   let params = new HttpParams().set('endDuration', endDuration);
+    // }
+    else if (type) {
+      this.params = this.params.set('type', type);
+    }
+    
+    return this.httpClient.get<Track[]>(this.baseUrl + 'tracks', {params: this.params});
   }
 }
